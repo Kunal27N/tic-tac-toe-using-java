@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+public class ticTacToe {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        char[][] board = new char[3][3];
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                board[row][col] = ' ';
+            }
+        }
+
+        char player = 'X';
+        boolean gameover=false;
+        printBoard(board);
+
+        while (!gameover) {
+
+            System.out.println("Player " + player + " enter: ");
+            int row = sc.nextInt();
+            int col = sc.nextInt();
+            System.out.println();
+            if (board[row][col] != ' ') {
+                System.out.println("Invalid move.Try again");
+            }
+
+            board[row][col] = player;
+            printBoard(board);
+            gameover=haveWon(board, player);
+            if (gameover) {
+                System.out.println("Player " + player + " has won.");
+                System.exit(0);
+            } else if (checkTie(board)) {
+                gameover=true;
+                System.out.println("The game is a tie.");
+
+            } else {
+                player = (player == 'X') ? '0' : 'X';
+            }
+        }
+
+}
+
+    public static boolean haveWon(char[][] board, char player) {
+
+        for(int row=0;row<3;row++){
+            if(board[row][0]==player && board[row][1]==player && board[row][2]==player) {
+                return true;
+            }
+            }
+
+
+        for(int col=0;col<3;col++){
+            if(board[0][col]==player && board[1][col]==player && board[2][col]==player) {
+                return true;
+            }
+        }
+
+
+        if(board[0][0] == player && board[1][1] == player && board[2][2] == player){
+            return true;
+        }
+        if(board[0][2] == player && board[1][1] == player && board[2][0] == player){
+            return true;
+        }
+        return false;
+    }
+    public static boolean checkTie(char[][] board){
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if(board[row][col] == ' ') return false;
+            }
+        }
+        return true;
+    }
+    private static void printBoard(char[][] board) {
+        for(int row=0;row<3;row++){
+            for(int col=0;col<3;col++){
+                System.out.print(board[row][col]+"| ");
+            }
+            System.out.println();
+        }
+
+    }
+    public static boolean gameEnd(char[][] board){
+        for(int row=0;row<3;row++){
+            for(int col=0;col < 3;col++){
+                if(board[row][col]!=' '){
+                  return false;
+                }
+            }
+        }
+        return true;
+    }
+}
